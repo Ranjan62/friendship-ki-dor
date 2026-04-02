@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Friendship UI</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #2b1055, #7597de);
+  overflow: hidden;
+}
+
+/* background stars */
+body::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.15;
+}
+
+/* card */
+.card {
+  position: relative;
+  width: 350px;
+  padding: 35px;
+  border-radius: 20px;
+  text-align: center;
+
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,0.2);
+
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  color: white;
+  animation: fade 0.6s ease;
+}
+
+h1 {
+  font-size: 20px;
+  margin: 15px 0;
+}
+
+.sub {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 20px;
+}
+
+.message {
+  margin: 15px 0;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.1);
+  font-size: 14px;
+}
+
+/* buttons */
+.buttons {
+  margin-top: 10px;
+}
+
+button {
+  border: none;
+  padding: 10px 18px;
+  margin: 5px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+/* yes */
+.yes {
+  background: #00c853;
+  color: white;
+}
+
+/* no */
+.no {
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+  position: relative;
+}
+
+/* animations */
+@keyframes fade {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.shake {
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <div style="font-size:40px">🤝</div>
+
+  <h1>Do you wanna be my friend? 😄</h1>
+  <div class="sub">Choose wisely. One of these is definitely a better choice.</div>
+
+  <div class="message" id="msg">
+    Click wisely 😏
+  </div>
+
+  <div class="buttons">
+    <button class="yes" id="yesBtn" onclick="yes()">Yes ✅</button>
+    <button class="no" id="noBtn" onclick="no()">No ❌</button>
+  </div>
+</div>
+
+<script>
+
+let count = 0;
+
+const messages = [
+  "Are you sure? 😅",
+  "Think again 👀",
+  "Galat button dabaya kya? 😄",
+  "This is not a good decision 😌",
+  "System warning ⚠️",
+  "Friendship reject karna illegal hai 😤",
+  "Dil tod diya 💔",
+  "Last chance 😈",
+  "अब तो हाँ बोल दो 😭",
+  "इतना attitude अच्छा नहीं 😏"
+];
+
+function no() {
+  const msg = document.getElementById("msg");
+  const card = document.getElementById("card");
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+
+  // change message
+  msg.innerText = messages[count % messages.length];
+
+  // shake card
+  card.classList.remove("shake");
+  void card.offsetWidth;
+  card.classList.add("shake");
+
+  // move NO button randomly
+  const x = Math.random() * 120 - 60;
+  const y = Math.random() * 60 - 30;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+
+  // grow YES button
+  yesBtn.style.transform = `scale(${1 + count * 0.12})`;
+
+  count++;
+}
+
+function yes() {
+  const card = document.getElementById("card");
+
+  card.innerHTML = `
+    <div style="font-size:40px">🎉</div>
+    <h1>Congratulations 🎉</h1>
+    <div class="sub">Friendship Accepted 🤝😄</div>
+  `;
+
+  const audio = new Audio("https://www.soundjay.com/buttons/sounds/button-3.mp3");
+  audio.play();
+}
+
+</script>
+
+</body>
+</html>
